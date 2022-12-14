@@ -129,60 +129,96 @@ class TestMRTD(unittest.TestCase):
     #Test case 3: to mock hardware scanner and to test decode function on a person with first name and last name as given name
     @patch('MRTD.HardwareScanner', side_effect = MockResponse2)
     def test_decode2(self, mock_obj):
+        tic = time.perf_counter()
         self.assertEqual(decode(),('8', '7', '4', '6', 'R724644M2', '630130', '680118', 'RZ671583Y', 'LKA', 'BLACK', 'DOMINIQUE CORALIE', 'P', 'LKA', 'M'))
+        tac = time.perf_counter()
+        print ("Time for Decode Test Case: ",(tac-tic))
 
     #Test case 4: to mock Database and to test encode function
     @patch('MRTD.sampleDatabase', side_effect = MockResponse)
     def test_encode(self, mock_obj):
+        tic = time.perf_counter()
         self.assertEqual(encode(),('W620126G5', '591010', '970730', 'AJ010215I', 'P<CIVLYNN<<NEVEAH<BRAM<<<<<<<<<<<<<<<<<<<<<<;W620126G54CIV5910106F9707302AJ010215I<<<<<<6'))
+        tac = time.perf_counter()
+        print ("Time for encode Test Case: ",(tac-tic))
 
     #Test case 5: to mock Database and to test encode function for the same person as in my 2nd test case
     @patch('MRTD.sampleDatabase', side_effect = MockResponse1)
     def test_encode1(self, mock_obj):
+        tic = time.perf_counter()
         self.assertEqual(encode(),('V008493B6', '780909', '090908', 'QZ181922T', 'P<ABWMALDONADO<<CAMILLA<<<<<<<<<<<<<<<<<<<<<;V008493B64ABW7809095M0909088QZ181922T<<<<<<5'))
+        tac = time.perf_counter()
+        print ("Time for encode Test Case: ",(tac-tic))
 
     #Test case 6: to mock Database and to test encode function for the same person as in my 3rd test case
     @patch('MRTD.sampleDatabase', side_effect = MockResponse2)
     def test_encode2(self, mock_obj):
+        tic = time.perf_counter()
         self.assertEqual(encode(),('R724644M2', '630130', '680118', 'RZ671583Y', 'P<LKABLACK<<DOMINIQUE<CORALIE<<<<<<<<<<<<<<<;R724644M28LKA6301307M6801184RZ671583Y<<<<<<6'))
+        tac = time.perf_counter()
+        print ("Time for encode Test Case: ",(tac-tic))
 
     # Test case 7: to mock and test mismatch function by checking the hardware scanner check digit with the computed check digit from database
     @patch('MRTD.HardwareScanner',side_effect = MockResponse)
     @patch('MRTD.sampleDatabase',side_effect = MockResponse)
     def test_mismatch(self, mock_obj,mock_obj2):
+        tic = time.perf_counter()
         self.assertEqual(mismatch(),["No mismatch found!"])
+        tac = time.perf_counter()
+        print ("Time for mismatch: ",(tac-tic))
     
     # Test case 8: To kill a mutant, Added this new test case, which tests mismatch in passport number
     @patch('MRTD.HardwareScanner',side_effect = MockResponse3)
     @patch('MRTD.sampleDatabase',side_effect = MockResponse3)
     def test_mismatch1(self, mock_obj,mock_obj2):
+        tic = time.perf_counter()
         self.assertEqual(mismatch(),['mismatch found in Passport Number'])
+        tac = time.perf_counter()
+        print ("Time for mismatch1: ",(tac-tic))
     
     # Test case 9: To kill a mutant, Added this new test case, which tests mismatch in passport number and birthdate
     @patch('MRTD.HardwareScanner',side_effect = MockResponse4)
     @patch('MRTD.sampleDatabase',side_effect = MockResponse4)
     def test_mismatch2(self, mock_obj,mock_obj2):
+        tic = time.perf_counter()
         self.assertEqual(mismatch(),['mismatch found in Passport Number', 'mismatch found in Birth Date'])
+        tac = time.perf_counter()
+        print ("Time for mismatch2: ",(tac-tic))
         
     # Test case 10: To kill a mutant, added this test case to cover checkDigit function for checking passport number check digit
     def test_checkDigit(self):
+        tic = time.perf_counter()
         self.assertEqual(checkDigit("V008493B6"),4)
+        tac = time.perf_counter()
+        print ("Time for checkDigit: ",(tac-tic))
     
     # Test case 11: To kill a mutant, added this test case to cover checkDigit function for checking birth date check digit
     def test_checkDigit1(self):
+        tic = time.perf_counter()
         self.assertEqual(checkDigit("591010"),6)
+        tac = time.perf_counter()
+        print ("Time for checkDigit1: ",(tac-tic))
     
     # Test case 12: To kill a mutant, added this test case to cover charValue function as well
     def test_charValue(self):
+        tic = time.perf_counter()
         self.assertEqual(charValue("C"),12)
+        tac = time.perf_counter()
+        print ("Time for charValue: ",(tac-tic))
     
     # Test case 13: To kill a mutant, added this test case to cover charValue function as well with different character
     def test_charValue1(self):
+        tic = time.perf_counter()
         self.assertEqual(charValue("<"),0)
+        tac = time.perf_counter()
+        print ("Time for charValue1: ",(tac-tic))
 
     # Test case 14: To kill a mutant, added this test case to cover charValue function as well with different character number
     def test_charValue2(self):
+        tic = time.perf_counter()
         self.assertEqual(charValue("4"),4)
+        tac = time.perf_counter()
+        print ("Time for charValue2: ",(tac-tic))
 
 if __name__ == '__main__':
     print('Running unit tests')
